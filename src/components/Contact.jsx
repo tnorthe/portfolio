@@ -9,16 +9,26 @@ import { slideIn } from "../utils/motion";
 
 const Contact = () => {
   const formRef = useRef();
-  const [form, setForn] = useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     message: ""
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {}
+  const handleChange = (e) => {
+    const {name,value} = e.target;
+    setForm({
+      ...form,
+      [name]: value
+    })
+  }
 
-  const handleSubmit = (e) => {}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    emailjs.send()
+  }
 
   return (
     <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
