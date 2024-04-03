@@ -7,6 +7,11 @@ import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
+
+// template_6tejhxf
+// service_x3uejjm
+// public key : fZti-QYMqcT8SVXTH
+
 const Contact = () => {
   const formRef = useRef();
   const [form, setForm] = useState({
@@ -27,7 +32,32 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    emailjs.send()
+    emailjs.send(
+    'service_x3uejjm',
+    'template_6tejhxf', 
+    {
+      from_name: form.name,
+      to_name: 'Tamara',
+      from_email: form.email,
+      to_email: 'tamara_invincible@yahoo.com',
+      message: form.message,
+    },
+    'fZti-QYMqcT8SVXTH'
+    )
+    .then(() => {
+      setLoading(false);
+      alert('Thank you. I will get back to you as soon as possible.');
+
+      setForm({
+        name: "",
+        email: "",
+        message: ""
+      })
+    }, (error) => {
+      setLoading(false);
+      console.log(error);
+      alert('Something went wrong. Please try again later.');
+    })
   }
 
   return (
