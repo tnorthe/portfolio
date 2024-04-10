@@ -7,8 +7,7 @@ import { HemisphereLight, PointLight } from 'three';
 const Computers = () => {
   const computer = useGLTF('./desktop_pc/scene.gltf');
   const { nodes, materials } = useGLTF('./desktop_pc/scene.gltf');
-  console.log('Nodes:', nodes);
-  console.log('Materials:', materials);
+  
   return (
     <group>
       <mesh>

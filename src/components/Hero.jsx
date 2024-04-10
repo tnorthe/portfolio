@@ -16,7 +16,7 @@ const Hero = () => {
           with dynamic user interfaces</p>
         </div>
       </div>
-      <ComputersCanvas />
+      {/*<ComputersCanvas />*/}
     </section>
   )
 }
