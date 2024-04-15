@@ -1,12 +1,13 @@
-import React, {Suspense} from 'react';
-import { Canvas } from '@react-three/fiber';
-import {Decal, OrbitControls, Preload, Float, useTexture} from '@react-three/drei';
+import React, {Suspense, useRef} from 'react';
+import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
+import {Decal, OrbitControls, Preload, Float, useTexture, Icosahedron} from '@react-three/drei';
 
 import CanvasLoader from '../Loader';
 import PropTypes from 'prop-types';
 
 const Ball = (props) => {
-  let decal;
+  //let decal;
   try {
     [decal] = useTexture([props.imgUrl]);
   } catch (error) {
@@ -15,14 +16,23 @@ const Ball = (props) => {
   }
 
   if (!decal) return null;
+  const light = useRef();
+
+  useFrame(() => {
+    if (light.current) {
+      light.current.position.set(0, 0, 0.05);
+    }
+  });
+
+  // Check if decal is a valid texture
   
   return (
     <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[0,0,0.05]}/>
+      <ambientLight intensity={0.5} />
+      <directionalLight ref={light}/>
       <mesh castShadow receiveShadow scale={2.75}>
-        <icosahedronGeometry args={[1, 1]} />
-        <meshStandardMaterial color="#fff8eb" polygonOffset polygonOffsetFactor={-5} flatShading/>  
+        <Icosahedron args={[1, 1]} />
+        <meshStandardMaterial color="#fff8eb" polygonOffset polygonOffsetFactor={-5} flatShading/>
       </mesh>
       <Decal
         texture={decal}
@@ -33,10 +43,11 @@ const Ball = (props) => {
   )
 }
 
-Ball.propTypes = {
+/*Ball.propTypes = {
   imgUrl: PropTypes.string.isRequired,
-};
+};*/
 
+const BallCanvas = ({ icon }) => {
 const BallCanvas = ({ icon }) => {
   return (
     <Canvas
@@ -45,11 +56,15 @@ const BallCanvas = ({ icon }) => {
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls enableZoom={false}/>
-        <Ball imgUrl={icon} /> 
+        <Ball imgUrl={icon} />
       </Suspense> 
       <Preload all />
     </Canvas>
   )
 }
 
-export default BallCanvas
+/*BallCanvas.propTypes = {
+  icon: PropTypes.string.isRequired,
+};*/
+
+export default BallCanvas;
