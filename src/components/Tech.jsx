@@ -6,7 +6,7 @@ const Tech = () => {
   return (
     <div className="flex flex-row flex-wrap justify-center gap-10">
       {technologies.map((technology) => (
-        <div className="w-30 h-28 rounded-full bg-white" key={technology.name}>
+        <div className="w-28 h-28" key={technology.name}>
           {/*<BallCanvas icon={technology.icon}/>*/}
           <img src={technology.icon} className="object-cover w-full h-full"/>
         </div>
